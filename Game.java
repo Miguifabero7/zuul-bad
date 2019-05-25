@@ -34,23 +34,26 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room entrada, lavabo, vestuarios, gimnasio, almacen, bar;
       
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        entrada = new Room("la entrada del campo de futbol");
+        lavabo = new Room("el los lavabos del campo");
+        vestuarios = new Room("los vestuarios de los jugadores");
+        gimnasio = new Room("el gimnasio");
+        almacen = new Room("el almacen del material");
+        bar = new Room("el bar");
         
         // initialise room exits
-        outside.setExits(null, theater, lab, pub);
-        theater.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
+        //Norte/hacia arriba, este/derecha, sur/hacia abajo, oeste/izquierda
+        entrada.setExits(gimnasio, bar, null, lavabo);
+        lavabo.setExits(vestuarios, entrada, null, null);
+        vestuarios.setExits(null, gimnasio, lavabo, null);
+        gimnasio.setExits(null, almacen, entrada, vestuarios);
+        almacen.setExits(null, null, null, gimnasio);
+        bar.setExits(null, null, null, entrada);
 
-        currentRoom = outside;  // start game outside
+        currentRoom = entrada;  // start game outside
     }
 
     /**
@@ -176,7 +179,7 @@ public class Game
         }
         else {
             currentRoom = nextRoom;
-            System.out.println("You are " + currentRoom.getDescription());
+            System.out.println("Estas en " + currentRoom.getDescription());
             System.out.print("Exits: ");
             if(currentRoom.northExit != null) {
                 System.out.print("north ");
